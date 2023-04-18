@@ -6,6 +6,9 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm'
 
 export default function Authpage() {
   return (
+    <main> 
     <div>Authpage</div>
+    <SignUpForm />
+    </main>
   )
 }
