@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Put API routes here, before the "catch all" route
 
-
+app.use('/api/users', require('./routes/api/users'));
 //catch all
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
