@@ -12,3 +12,7 @@ export async function signUp(userData) {
       throw new Error('Invalid Sign Up');
     }
   }
+
+  export function login(credentials) {
+    return sendRequest(`${BASE_URL}/login`, 'POST', credentials);
+  }
