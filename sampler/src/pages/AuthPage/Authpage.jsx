@@ -4,11 +4,11 @@ import React from 'react'
 import LoginForm from '../../components/LoginForm/LoginForm'
 import SignUpForm from '../../components/SignUpForm/SignUpForm'
 
-export default function Authpage() {
+export default function Authpage({setUser}) {
   return (
     <main> 
     <div>Authpage</div>
-    <SignUpForm />
+    <SignUpForm  setUser={setUser}/>
     </main>
   )
 }
