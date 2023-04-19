@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import * as postAPI from '../../utilities/posts-api'
+
 
     const initialState = {
         subject: '',
@@ -7,14 +9,22 @@ import React, { useState } from "react"
 
 
 export default function NewPostForm() {
+    const [postData, setPostData] = useState(initialState);
     
 
     const handleChange = (evt) => {
         evt.preventDefault();
+        setPostData({...postData, [evt.target.name]: evt.target.value})
     }
 
-    const handleSubmit = (evt) => {
+    const handleSubmit = async (evt) => {
         evt.preventDefault();
+        try {
+            const newPost = await postAPI.createPost(postData)
+        } catch {
+          setError('Error')  
+        }
+            console.log(newPost)
     }
 
   return (
@@ -26,6 +36,7 @@ export default function NewPostForm() {
                 type='text'
                 name='subject'
                 onChange={handleChange}
+                value={postData.subject}
             />
             </div>
             <div>
