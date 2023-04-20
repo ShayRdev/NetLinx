@@ -20,7 +20,7 @@ export default function NewPostForm() {
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         try {
-            console.log(postData)
+            
             const newPost = await postAPI.createPost(postData)
             // setPostData(initialState);
         } catch {

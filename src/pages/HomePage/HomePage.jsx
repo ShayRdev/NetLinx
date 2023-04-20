@@ -5,8 +5,11 @@ import NewPostForm from '../../components/NewPostForm/NewPostForm'
 export default function HomePage() {
   return (
     <>
-    <NewPostForm />
-    <div>HomePage</div>
+    <div>
+      <NewPostForm />
+      <h1>HomePage</h1>
+      <div>hello, </div>
+    </div>
     </>
   )
 }
