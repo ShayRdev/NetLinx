@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import NewPostForm from '../../components/NewPostForm/NewPostForm'
-
+import PostsList from '../../components/PostsList/PostsList'
+import { getUser } from '../../utilities/users-service'
 
 export default function HomePage() {
+  const [user, setUser] = useState(getUser());
   return (
     <>
     <div>
+      <h1>Sampler</h1>
       <NewPostForm />
-      <h1>HomePage</h1>
+      <PostsList user={user} setUser={setUser}/>
       <div>hello, </div>
     </div>
     </>

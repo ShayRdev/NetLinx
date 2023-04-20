@@ -10,14 +10,13 @@ import HomePage from '../HomePage/HomePage';
 export default function App() {
   const [user, setUser] = useState(getUser());
 
-
   return (
     <main className="App">
       {user ?
         <>
             <NavBar setUser={setUser} user={user} />
             <Routes>
-              < Route path="/home" element={<HomePage />} />
+              < Route path="/home" element={<HomePage setUser={setUser} user={user} />} />
               < Route path="/*" to="/home" element={<HomePage />}></Route>
             </Routes>
         </>

@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import * as postAPI from '../../utilities/posts-api'
-
+import './NewPostForm.css'
 
     const initialState = {
         subject: '',
@@ -21,12 +21,13 @@ export default function NewPostForm() {
         evt.preventDefault();
         try {
             
-            const newPost = await postAPI.createPost(postData)
+        const newPost = await postAPI.createPost(postData)
             // setPostData(initialState);
-        } catch {
-          setError('Error')  
+        } catch (error) {
+          console.log('Error')  
         }
     }
+
 
   return (
     <div>
@@ -46,6 +47,7 @@ export default function NewPostForm() {
                 type='text'
                 name='body'
                 onChange={handleChange}
+                value={postData.body}
             />
             </div>
             <button type="submit" >Post</button>

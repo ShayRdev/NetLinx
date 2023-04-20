@@ -1,0 +1,23 @@
+.post {
+    display: grid;
+    grid-template-columns: auto;
+    align-items: center;
+    margin-top: 2rem;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: rgb(132, 179, 181);
+    color: white;
+
+}
+.user {
+    display: grid;
+    grid-template-columns: max-content;
+    align-items: flex-start;
+}
+
+.subject {
+    display: grid;
+    grid-template-columns: auto;
+    align-items: center;
+}

@@ -1,7 +1,8 @@
-const Post = require('../../models/post');
+const Post = require('../../models/postSchema');
 
 module.exports = {
     createPost,
+    index
 }
 
 async function createPost(req, res) {
@@ -12,3 +13,11 @@ async function createPost(req, res) {
         res.status(400).json(error)
     }
 }
+
+async function index(req, res) {
+    console.log('INSIDE CTRLR FUNCTION')
+    const post = await Post.find({});
+    console.log(post, 'POST IN CONTROLLER')
+    res.json(post);
+}
+

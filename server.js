@@ -18,6 +18,7 @@ app.use('/api/posts', require('./routes/api/posts'));
 
 app.use('/api/users', require('./routes/api/users'));
 
+
 //catch all
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
