@@ -10,21 +10,22 @@ import * as postAPI from '../../utilities/posts-api'
 
 export default function NewPostForm() {
     const [postData, setPostData] = useState(initialState);
-    
+    const [error, setError] = useState('')
 
-    const handleChange = (evt) => {
-        evt.preventDefault();
-        setPostData({...postData, [evt.target.name]: evt.target.value})
+    function handleChange(evt) {
+       const inputData = {...postData, [evt.target.name]: evt.target.value}
+       setPostData(inputData);
     }
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         try {
+            console.log(postData)
             const newPost = await postAPI.createPost(postData)
+            // setPostData(initialState);
         } catch {
           setError('Error')  
         }
-            console.log(newPost)
     }
 
   return (
@@ -47,8 +48,9 @@ export default function NewPostForm() {
                 onChange={handleChange}
             />
             </div>
-            <button type="submit" onSubmit={handleSubmit}>Post</button>
+            <button type="submit" >Post</button>
         </form>
+        <p className="error-message">&nbsp;{error}</p>
     </div>
   )
 }

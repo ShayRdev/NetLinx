@@ -1,15 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt');
 
-const postSchema = new Post({
+const postSchema = new Schema({
     subject: {type: String},
     body: {type: String},
 }, {
     timestamps: true,
-    toJSON: {
-        transform: function(doc, ret) {
-            return ret;
-        }
-    }
+   
 })
+
+module.exports = mongoose.model('Post', postSchema)

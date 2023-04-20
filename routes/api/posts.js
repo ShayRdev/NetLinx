@@ -3,7 +3,5 @@ const router = express.Router();
 const postsCtrl = require('../../controllers/api/posts.js');
 
 
-router.post('/', postsCtrl.create);
-
-// router.post('/login', usersCtrl.login);
+router.post('/', postsCtrl.createPost);
 module.exports = router;
