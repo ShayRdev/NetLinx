@@ -1,6 +1,6 @@
 # Sampler
 
-## A full stack MERN App
+## A MERN stack App
 
 ### Sampler is a full stack forum app made with react.
 
