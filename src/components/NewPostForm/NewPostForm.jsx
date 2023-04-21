@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react"
 import * as postAPI from '../../utilities/posts-api'
 import './NewPostForm.css'
 
+
+export default function NewPostForm({setUpdate, user}) {
+    
     const initialState = {
         subject: '',
         body: '',
+        username: user.name
     }
 
 
-export default function NewPostForm({setUpdate, user}) {
     const [postData, setPostData] = useState(initialState);
     const [error, setError] = useState('')
 
@@ -21,7 +24,7 @@ export default function NewPostForm({setUpdate, user}) {
         evt.preventDefault();
         try {
             
-        const newPost = await postAPI.createPost(postData, user)
+        await postAPI.createPost(postData, user)
             setUpdate(true)
             setPostData(initialState);
             } catch (error) {
@@ -29,29 +32,28 @@ export default function NewPostForm({setUpdate, user}) {
             }
     }
 
-
   return (
     <div>
         <form className="new-post-form" onSubmit={handleSubmit}>
-            <div>
+            <div className="subject">
             <label>Subject</label>
-            <input
+            <input className="subject-input-field"
                 type='text'
                 name='subject'
                 onChange={handleChange}
                 value={postData.subject}
             />
             </div>
-            <div>
+            <div className="body">
             <label>Body</label>
-            <input 
+            <input className="body-input-field" 
                 type='text'
                 name='body'
                 onChange={handleChange}
                 value={postData.body}
             />
             </div>
-            <button type="submit" >Post</button>
+            <button className="post-button" type="submit" >Post</button>
         </form>
         <p className="error-message">&nbsp;{error}</p>
     </div>

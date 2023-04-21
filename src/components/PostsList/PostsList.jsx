@@ -39,11 +39,11 @@ export default function PostsList({user, setUpdate, update}) {
     <div className='post-container'>
         {allPosts.map(post => (
             <div className='post'  key={post._id}>
-                <h3 className='user'>{user.name}</h3>
+                <h3 className='user'>{post.username}</h3>
                 <h2 className='subject'>{post.subject}</h2>
                 <p className='body'>{post.body}</p>
-                <button onClick={() => handleDelete(post._id)}>delete</button>
-                <EditPostForm id={post._id} updateState={updateState} setUpdateState={setUpdateState} handleEdit={handleEdit} />  
+                { user._id === post.user && <button onClick={() => handleDelete(post._id)}>delete</button> }
+                { user._id === post.user && <EditPostForm id={post._id} updateState={updateState} setUpdateState={setUpdateState} handleEdit={handleEdit} /> } 
             </div>
         ))}
     </div>
