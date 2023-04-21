@@ -4,11 +4,11 @@ import './NewPostForm.css'
 
     const initialState = {
         subject: '',
-        body: ''
+        body: '',
     }
 
 
-export default function NewPostForm({setUpdate}) {
+export default function NewPostForm({setUpdate, user}) {
     const [postData, setPostData] = useState(initialState);
     const [error, setError] = useState('')
 
@@ -21,12 +21,12 @@ export default function NewPostForm({setUpdate}) {
         evt.preventDefault();
         try {
             
-        const newPost = await postAPI.createPost(postData)
-        setUpdate(true)
-            // setPostData(initialState);
-        } catch (error) {
-          console.log('Error')  
-        }
+        const newPost = await postAPI.createPost(postData, user)
+            setUpdate(true)
+            setPostData(initialState);
+            } catch (error) {
+            console.log('Error')  
+            }
     }
 
 

@@ -11,7 +11,7 @@ export default function HomePage() {
     <>
     <div>
       <h1>Sampler</h1>
-      <NewPostForm setUpdate={setUpdate}/>
+      <NewPostForm user={user} setUser={setUser} setUpdate={setUpdate}/>
       <PostsList update={update} setUpdate={setUpdate} user={user} setUser={setUser}/>
       <div>hello, </div>
     </div>
