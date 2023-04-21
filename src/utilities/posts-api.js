@@ -3,11 +3,11 @@ const BASE_URL ='/api/posts'
 
 
 export function createPost(postData, user) {
-    return sendRequest(BASE_URL, 'POST', {postData, user});
+    return sendRequest(`${BASE_URL}/posts`, 'POST', {postData, user});
 }
 
 export function getAllPosts() {
-    return sendRequest(`${BASE_URL}`);
+    return sendRequest(BASE_URL);
 }
 
 export function deletePost(id, ) {
@@ -15,6 +15,5 @@ export function deletePost(id, ) {
   }
 
   export function updatePost(id, postData) {
-    console.log(postData)
     return sendRequest(`${BASE_URL}/${id}`, 'PUT', postData);
 }

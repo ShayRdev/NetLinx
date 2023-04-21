@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
 import AuthPage from '../AuthPage/AuthPage'
 import NavBar from '../../components/NavBar/NavBar';
@@ -17,7 +17,7 @@ export default function App() {
             <NavBar setUser={setUser} user={user} />
             <Routes>
               < Route path="/home" element={<HomePage setUser={setUser} user={user} />} />
-              < Route path="/*" to="/home" element={<HomePage />}></Route>
+              < Route path="/*" element={<Navigate to='/home' />}></Route>
             </Routes>
         </>
         :

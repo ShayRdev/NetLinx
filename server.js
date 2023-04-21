@@ -11,12 +11,11 @@ app.use(logger('dev'));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'dist')));
-
+app.use(require('./config/checkToken'));
 // Put API routes here, before the "catch all" route
-
 app.use('/api/users', require('./routes/api/users'));
-
-app.use('/api/posts', require('./routes/api/posts'));
+const ensureLoggedIn = require('./config/ensureLoggedIn');
+app.use('/api/posts', ensureLoggedIn, require('./routes/api/posts'));
 
 
 //catch all

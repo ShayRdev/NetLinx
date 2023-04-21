@@ -6,7 +6,8 @@ import './PostsList.css'
 
 export default function PostsList({user, setUpdate, update}) {
     const [allPosts, setAllPosts] = useState([])
-    const [rerender, setRerender] = useState(true)
+    const [updateState, setUpdateState] = useState(true)
+
     async function getPosts () {
         try {
             const fetchedData = await postAPI.getAllPosts();
@@ -20,7 +21,7 @@ export default function PostsList({user, setUpdate, update}) {
     useEffect(function() {
         getPosts();
         setUpdate(false)
-    },[update,]);
+    },[update, updateState]);
 
 
     async function handleDelete(id) {
@@ -29,9 +30,10 @@ export default function PostsList({user, setUpdate, update}) {
     }
 
     async function handleEdit(id) {
-        const editedPost = await postAPI.updatePost(id);   
-        setAllPosts(allPosts);
+        await postAPI.updatePost(id);   
+        setUpdate(true)
     }
+
 
   return (
     <div className='post-container'>
@@ -41,7 +43,7 @@ export default function PostsList({user, setUpdate, update}) {
                 <h2 className='subject'>{post.subject}</h2>
                 <p className='body'>{post.body}</p>
                 <button onClick={() => handleDelete(post._id)}>delete</button>
-                <EditPostForm id={post._id} handleEdit={handleEdit} />  
+                <EditPostForm id={post._id} updateState={updateState} setUpdateState={setUpdateState} handleEdit={handleEdit} />  
             </div>
         ))}
     </div>

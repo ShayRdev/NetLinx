@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import * as postAPI from '../../utilities/posts-api'
-
+import PostsList from '../PostsList/PostsList';
 
 const editedState = {
     subject: '',
     body: '',
 }
 
-export default function EditPostForm({id}) {
+export default function EditPostForm({id, setUpdateState, updateState, handleEdit}) {
 
   const [postData, setPostData] = useState(editedState);
   const [error, setError] = useState('');
@@ -21,11 +21,12 @@ export default function EditPostForm({id}) {
     evt.preventDefault();
     try {
     await postAPI.updatePost(id, postData);
+    setPostData(postData)
+    setUpdateState(!updateState);
     } catch (error) {
       setError('Error editing post');
     }
   }
-
 
   return (
     <div>

@@ -30,6 +30,8 @@ async function deletePost(req, res) {
     res.json(deletedPost)
 }
 
+
+
 async function updatePost(req, res) {
     try {
       const id = req.params.id;
