@@ -2,7 +2,8 @@ const Post = require('../../models/postSchema');
 
 module.exports = {
     createPost,
-    index
+    index,
+    deletePost
 }
 
 async function createPost(req, res) {
@@ -21,3 +22,9 @@ async function index(req, res) {
     res.json(post);
 }
 
+async function deletePost(req, res) {
+    const id = req.params.id
+    const deletedPost = await Post.findByIdAndDelete(id)
+    console.log(deletedPost)
+    res.json(deletedPost)
+}

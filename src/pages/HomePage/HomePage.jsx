@@ -5,12 +5,14 @@ import { getUser } from '../../utilities/users-service'
 
 export default function HomePage() {
   const [user, setUser] = useState(getUser());
+  const [update, setUpdate] = useState(false);
+
   return (
     <>
     <div>
       <h1>Sampler</h1>
-      <NewPostForm />
-      <PostsList user={user} setUser={setUser}/>
+      <NewPostForm setUpdate={setUpdate}/>
+      <PostsList update={update} setUpdate={setUpdate} user={user} setUser={setUser}/>
       <div>hello, </div>
     </div>
     </>
