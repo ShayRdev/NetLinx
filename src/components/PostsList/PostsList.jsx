@@ -39,7 +39,7 @@ export default function PostsList({user, setUpdate, update}) {
     <div className='post-container'>
         {allPosts.map(post => (
             <div className='post'  key={post._id}>
-                <h3 className='user'>{user.name}</h3>
+                <h3 className='user'>{user._id}</h3>
                 <h2 className='subject'>{post.subject}</h2>
                 <p className='body'>{post.body}</p>
                 <button onClick={() => handleDelete(post._id)}>delete</button>
