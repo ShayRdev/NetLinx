@@ -1,4 +1,3 @@
-import './App.css';
 import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
@@ -11,19 +10,20 @@ export default function App() {
   const [user, setUser] = useState(getUser());
 
   return (
-    <main className="App">
+    <main className="bg-cover bg-center bg-fixed">
       {user ?
-        <>
-            <NavBar setUser={setUser} user={user} />
+        <div>
+            <NavBar setUser={setUser} user={user}/>
+            <div className='pt-20'>
             <Routes>
               < Route path="/home" element={<HomePage setUser={setUser} user={user} />} />
               < Route path="/*" element={<Navigate to='/home' />} />
             </Routes>
-        </>
+            </div>
+        </div>
         :
         <AuthPage setUser={setUser} />
       }
     </main>
   )
 }
-

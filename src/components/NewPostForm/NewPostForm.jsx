@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import * as postAPI from '../../utilities/posts-api'
-import './NewPostForm.css'
+import { Textarea } from "@material-tailwind/react"
 
 
 export default function NewPostForm({setUpdate, user}) {
@@ -36,22 +36,33 @@ export default function NewPostForm({setUpdate, user}) {
     <div>
         <form className="new-post-form" onSubmit={handleSubmit}>
             <div className="subject">
-            <label>Subject</label>
+            <h4>New Post</h4>
+            <label></label>
             <input className="subject-input-field"
                 type='text'
+                placeholder="Subject"
                 name='subject'
                 onChange={handleChange}
                 value={postData.subject}
             />
             </div>
             <div className="body">
-            <label>Body</label>
-            <input className="body-input-field" 
+            <Textarea 
+                label="Message" 
                 type='text'
+                placeholder="Write a post! "
                 name='body'
                 onChange={handleChange}
                 value={postData.body}
             />
+
+
+
+
+            
+
+
+
             </div>
             <button className="post-button" type="submit" >Post</button>
         </form>

@@ -1,60 +1,107 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react';
 import { signUp } from '../../utilities/users-service';
-import './SignUpForm.css'
+import { Label } from 'flowbite-react';
+import { TextInput } from 'flowbite-react';
 
-export default class SignUpForm extends Component {
+export default function SignUpForm({ setUser }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [error, setError] = useState('');
 
-  // state is always an object with a property for each "piece" of state
-  state = {
-    name: '',
-    email: '',
-    password: '',
-    confirm: '',
-    error: ''
-  };
-
-  handleSubmit = async (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      // We don't want to send the 'error' or 'confirm' property,
-      //  so let's make a copy of the state object, then delete them
-      const formData = {...this.state}
-      delete formData.error;
-      delete formData.confirm;
-      const user = await signUp(formData)
-      this.props.setUser(user)
+      const formData = { name, email, password };
+      const user = await signUp(formData);
+      setUser(user);
     } catch {
-      this.setState({ error: 'Sign Up Failed - Try Again'})
+      setError('Sign Up Failed - Try Again');
     }
-  }
+  };
 
-  handleChange = (evt) => {
-    this.setState({ [evt.target.name]: evt.target.value, error: '' })
-  }
+  const handleChange = (evt) => {
+    switch (evt.target.name) {
+      case 'name':
+        setName(evt.target.value);
+        break;
+      case 'email':
+        setEmail(evt.target.value);
+        break;
+      case 'password':
+        setPassword(evt.target.value);
+        break;
+      case 'confirm':
+        setConfirm(evt.target.value);
+        break;
+      default:
+        break;
+    }
+    setError('');
+  };
 
+  const disable = password !== confirm;
 
+  return (
+    <div className="container mx-auto max-w-2xl sm:max-w-xl lg:mr-0 lg:ml-auto lg:pr-auto lg:w-1/2 pb-80 pr-40">
+      <div className="container bg-gradient-to-r from-white via-gray-100 to-gray-70 dark:bg-gray-800 rounded-lg shadow-lg p-10">
+        <h2 className="text-2xl font-bold mb-2">Sign Up</h2>
+        <form className="flex flex-col gap-4" autoComplete="off" onSubmit={handleSubmit}>
+          <div>
+            <div className='mb-2'>
+              <Label value='Name' />
+            </div>
+            <TextInput 
+              type="text" 
+              name="name" 
+              value={name} 
+              onChange={handleChange}
+              required={true}
 
-  render() {
-    const disable = this.state.password !== this.state.confirm;
-    return (
-      <div>
-        <div className="form-container">
-          <form autoComplete="off" onSubmit={this.handleSubmit}>
-            <label>Name</label>
-            <input type="text" name="name" value={this.state.name} onChange={this.handleChange} required />
-            <label>Email</label>
-            <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
-            <label>Password</label>
-            <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
-            <label>Confirm</label>
-            <input type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
-            <button type="submit" disabled={disable}>SIGN UP</button>
-          </form>
-        </div>
-        <p className="error-message">&nbsp;{this.state.error}</p>
+            />
+          </div>
+          <div>
+            <div className='mb-2'>
+              <Label value="Your Email" />
+            </div>
+              <TextInput 
+                type="email" 
+                name="email" 
+                value={email} 
+                onChange={handleChange}
+                required={true}
+              />
+          </div>
+          <div>
+            <div className='mb-2'>
+              <Label value="Password" />
+            </div>
+              <TextInput 
+                type="password" 
+                name="password" 
+                value={password} 
+                onChange={handleChange}
+                required={true}
+              />
+          </div>
+          <div>
+            <div className='mb-2'>
+              <Label value="Confirm" />
+            </div>
+              <TextInput 
+                type="password" 
+                name="confirm" 
+                value={confirm} 
+                onChange={handleChange}
+                required={true}
+              />
+          </div>
+ 
+          <button type="submit" className=" mb text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Log In</button>
+        </form>
       </div>
-    );
-  }
-
+      <p className="error-message">&nbsp;{error}</p>
+    </div>
+  );
 }
-
