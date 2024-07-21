@@ -5,7 +5,8 @@ module.exports = {
     createPost,
     index,
     deletePost,
-    updatePost
+    updatePost,
+    getPostById
 }
 
 async function createPost(req, res) {
@@ -31,8 +32,6 @@ async function deletePost(req, res) {
     res.json(deletedPost)
 }
 
-
-
 async function updatePost(req, res) {
     try {
       const id = req.params.id;
@@ -46,7 +45,18 @@ async function updatePost(req, res) {
     }
   }
 
-
+  async function getPostById(req, res) {
+    try {
+        const id = req.params.id;
+        const post = await Post.findById(id).populate('user', 'name');
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 
 
