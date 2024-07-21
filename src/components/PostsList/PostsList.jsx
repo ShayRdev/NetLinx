@@ -35,7 +35,7 @@ export default function PostsList({ user, setUpdate, update }) {
   }
 
   return (
-   <div className="max-w-md mx-auto rounded-xl overflow-hidden md:max-w-2xl">
+   <div className="pt-24 max-w-md mx-auto rounded-xl overflow-hidden md:max-w-2xl">
   {allPosts.map((post) => (
     <div key={post._id} className="bg-white rounded-lg shadow-md my-4 p-4 pb-10">
       <div className="flex items-center">

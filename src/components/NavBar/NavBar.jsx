@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import * as userService from '../../utilities/users-service'
+import './NavBar.css'
 import {
   Navbar,
   Typography,
 } from "@material-tailwind/react";
 
-export default function NavBar({user, setUser}) {
+export default function NavBar({user, setUser, setIsModalOpen}) {
 
   const [openNav, setOpenNav] = React.useState(false);
  
@@ -49,20 +50,34 @@ export default function NavBar({user, setUser}) {
   }
 
   return (
-      <Navbar className="bg-white dark:bg-gray-900 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 text-black w-full ">
+      <nav className="block py-4 px-8 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border bg-white dark:bg-gray-900 fixed z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 text-black w-full">
         <div className="flex items-center justify-between text-blue-gray-900">
-          <Typography
-            as="a"
-            href="#"
-            className=" flex items-center justify-between pl-2 self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-          >
-            Sampler
-          </Typography>
+          <div className="flex items-center gap-4">
+            <Typography
+              as="a"
+              href="#"
+              className="flex items-center justify-between pl-2 self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+            >
+              Sampler
+            </Typography>
+            <button
+                className="flex items-center text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center pl"
+                onClick={() => setIsModalOpen(true)}
+              >
+                New Post
+            </button>
+          </div>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
-            <button type="button" onClick={handleLogOut} className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Log Out</button>
+            <button 
+              className="flex items-center text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center pl"
+              type="button" 
+              onClick={handleLogOut} 
+            >
+              Log Out
+            </button>
           </div>
         </div>  
-      </Navbar>
+      </nav>
 );
 }
