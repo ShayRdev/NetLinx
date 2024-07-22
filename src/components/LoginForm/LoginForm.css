@@ -1,0 +1,78 @@
+/* Define the keyframes for the falling effect */
+@keyframes fall {
+    0% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    10% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    90% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+}
+
+/* Define the keyframes for the shimmering effect */
+@keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+}
+
+/* Define the keyframes for the full animation cycle */
+@keyframes fullCycle {
+    0% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    87% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+
+/* Style for falling and shimmering letters */
+.falling-shimmering-letters {
+    display: inline-flex;
+    position: relative;
+}
+
+.falling-shimmering-letters span {
+    display: inline-block;
+    color: #fff; /* Default text color */
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.994) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+    animation: fall 6s ease-out infinite, shimmer 4s ease-in-out;
+    animation-delay: calc(0.1s * var(--letter-index));
+    animation-fill-mode: both;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Shimmer effect applied once per full cycle */
+.falling-shimmering-letters-container {
+    animation: fullCycle 8s infinite;
+}
+
+/* Adjust delays based on index */
+.falling-shimmering-letters span:nth-child(1) { --letter-index: 0; }
+.falling-shimmering-letters span:nth-child(2) { --letter-index: 1; }
+.falling-shimmering-letters span:nth-child(3) { --letter-index: 2; }
+.falling-shimmering-letters span:nth-child(4) { --letter-index: 3; }
+.falling-shimmering-letters span:nth-child(5) { --letter-index: 4; }
+.falling-shimmering-letters span:nth-child(6) { --letter-index: 5; }
+.falling-shimmering-letters span:nth-child(7) { --letter-index: 6; }
+.falling-shimmering-letters span:nth-child(8) { --letter-index: 7; }

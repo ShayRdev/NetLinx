@@ -7,7 +7,8 @@ export default function PostsList({ user, setUpdate, update }) {
   const [updateState, setUpdateState] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editPostId, setEditPostId] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(null); // State to track which post's dropdown is open
+  const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [darkMode, setDarkMode] = useState(true); // State for dark mode
 
   async function getPosts() {
     try {
@@ -38,10 +39,24 @@ export default function PostsList({ user, setUpdate, update }) {
     setDropdownOpen(dropdownOpen === id ? null : id);
   }
 
+  function toggleDarkMode() {
+    setDarkMode(!darkMode);
+  }
+
   return (
-    <div className="pt-24 max-w-md mx-auto rounded-xl overflow-hidden md:max-w-2xl">
+    <div className={`pt-24 max-w-md mx-auto ${darkMode ? ' text-white' : 'text-gray-900'} rounded-xl overflow-hidden md:max-w-2xl`}>
+      {/* Toggle dark mode button */}
+      <div className="absolute pt-24 top-0 right-0 m-4">
+        <button
+          className={`px-3 py-1 rounded-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} border border-gray-200 focus:outline-none`}
+          onClick={toggleDarkMode}
+        >
+          {darkMode ? 'Light Mode' : 'Dark Mode'}
+        </button>
+      </div>
+
       {allPosts.map((post) => (
-        <div key={post._id} className="bg-white rounded-lg shadow-md my-4 p-4 pb-10">
+        <div key={post._id} className={`rounded-lg shadow-md my-4 p-4 pb-10 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <img
@@ -51,14 +66,14 @@ export default function PostsList({ user, setUpdate, update }) {
               />
             </div>
             <div className="ml-3">
-              <h3 className="text-lg font-medium text-gray-900">{post.username}</h3>
-              <p className="text-sm font-medium text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</p>
-              <div className='border-solid w-full'></div>
+              <h3 className={`text-lg font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{post.username}</h3>
+              <p className={`text-sm font-medium ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{new Date(post.createdAt).toLocaleDateString()}</p>
+              <div className={`${darkMode ? 'border-gray-600' : 'border-gray-300'} border-solid w-full mt-1`}></div>
             </div>
             {user._id === post.user && (
               <div className="ml-auto relative">
                 <button
-                  className="inline-flex items-center justify-center p-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+                  className={`inline-flex items-center justify-center p-2 rounded-md text-sm font-medium ${darkMode ? 'text-gray-400 bg-gray-700 hover:bg-gray-600' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} shadow-sm border border-transparent focus:outline-none`}
                   onClick={() => toggleDropdown(post._id)}
                 >
                   <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -66,15 +81,15 @@ export default function PostsList({ user, setUpdate, update }) {
                   </svg>
                 </button>
                 {dropdownOpen === post._id && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                  <div className={`absolute right-0 mt-2 w-48 ${darkMode ? 'bg-gray-800' : 'bg-white'} border ${darkMode ? 'border-gray-700' : 'border-gray-200'} rounded-md shadow-lg z-10`}>
                     <button
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                      className={`block w-full px-4 py-2 text-left text-sm ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'} focus:outline-none`}
                       onClick={() => handleEdit(post._id)}
                     >
                       Edit
                     </button>
                     <button
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                      className={`block w-full px-4 py-2 text-left text-sm ${darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'} focus:outline-none`}
                       onClick={() => handleDelete(post._id)}
                     >
                       Delete
@@ -86,11 +101,12 @@ export default function PostsList({ user, setUpdate, update }) {
           </div>
 
           <div className="mt-3">
-            <h3 className="text-xl mb-2">{post.subject}</h3>
-            <p className="text-sm mb-2">{post.body}</p>
+            <h3 className={`text-xl mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{post.subject}</h3>
+            <p className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-700'}`}>{post.body}</p>
           </div>
         </div>
       ))}
+
       {isModalOpen && (
         <EditPostForm
           id={editPostId}

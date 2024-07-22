@@ -1,7 +1,7 @@
 import React from 'react';
 import UserPosts from '../../components/UserPosts/UserPosts';
 
-export default function AccountPage({ user, update, setUpdate }) {
+export default function AccountPage({ user, update, setUpdate, darkMode }) {
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -40,7 +40,7 @@ export default function AccountPage({ user, update, setUpdate }) {
         <div className="p-6 pt-20"> {/* Reduced top padding */}
           {/* Posts Section */}
           <h2 className="p-2 text-3xl font-bold mb-2 text-center text-white">Posts</h2> {/* Centered and adjusted text color */}
-          <UserPosts user={user} setUpdate={setUpdate} update={update} />
+          <UserPosts user={user} setUpdate={setUpdate} update={update} darkMode={darkMode} />
         </div>
       </div>
       
