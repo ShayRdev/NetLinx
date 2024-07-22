@@ -21,3 +21,7 @@ export function updatePost(id, postData) {
 export function getPostById(id) {
     return sendRequest(`${BASE_URL}/${id}`);
 }
+
+export function getPostsByUser(userId) {
+    return sendRequest(`${BASE_URL}/user/${userId}`);
+}

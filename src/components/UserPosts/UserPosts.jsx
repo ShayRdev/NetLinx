@@ -2,25 +2,25 @@ import React, { useState, useEffect } from 'react';
 import * as postAPI from '../../utilities/posts-api';
 import EditPostForm from '../EditPostForm/EditPostForm';
 
-export default function PostsList({ user, setUpdate, update }) {
-  const [allPosts, setAllPosts] = useState([]);
+export default function UserPosts({ user, setUpdate, update }) {
+  const [userPosts, setUserPosts] = useState([]);
   const [updateState, setUpdateState] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editPostId, setEditPostId] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(null); // State to track which post's dropdown is open
+  const [dropdownOpen, setDropdownOpen] = useState(null);
 
-  async function getPosts() {
+  async function fetchUserPosts() {
     try {
-      const fetchedData = await postAPI.getAllPosts();
-      fetchedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setAllPosts(fetchedData);
+      const posts = await postAPI.getPostsByUser(user._id);
+      posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setUserPosts(posts);
     } catch (error) {
       console.error('Error fetching posts', error);
     }
   }
 
   useEffect(() => {
-    getPosts();
+    fetchUserPosts();
     setUpdate(false);
   }, [update, updateState]);
 
@@ -39,8 +39,8 @@ export default function PostsList({ user, setUpdate, update }) {
   }
 
   return (
-    <div className="pt-24 max-w-md mx-auto rounded-xl overflow-hidden md:max-w-2xl">
-      {allPosts.map((post) => (
+    <div className="max-w-md mx-auto rounded-xl overflow-hidden md:max-w-2xl">
+      {userPosts.map((post) => (
         <div key={post._id} className="bg-white rounded-lg shadow-md my-4 p-4 pb-10">
           <div className="flex items-center">
             <div className="flex-shrink-0">

@@ -6,7 +6,8 @@ module.exports = {
     index,
     deletePost,
     updatePost,
-    getPostById
+    getPostById,
+    getPostsByUser
 }
 
 async function createPost(req, res) {
@@ -53,6 +54,16 @@ async function updatePost(req, res) {
             return res.status(404).json({ message: 'Post not found' });
         }
         res.json(post);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+async function getPostsByUser(req, res) {
+    try {
+        const userId = req.params.userId;
+        const posts = await Post.find({ user: userId });
+        res.json(posts);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
