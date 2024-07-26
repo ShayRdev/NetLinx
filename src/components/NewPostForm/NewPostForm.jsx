@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import * as postAPI from '../../utilities/posts-api';
 import { Textarea } from "@material-tailwind/react";
+import { io } from "socket.io-client";
+
+const ENDPOINT = "http://localhost:3000";
+let socket;
+
 
 export default function NewPostForm({ setUpdate, user, setIsModalOpen }) {
 
@@ -13,6 +18,10 @@ export default function NewPostForm({ setUpdate, user, setIsModalOpen }) {
     const [postData, setPostData] = useState(initialState);
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        socket = io(ENDPOINT);
+    }, [])
+
     function handleChange(evt) {
         const inputData = { ...postData, [evt.target.name]: evt.target.value };
         setPostData(inputData);
@@ -21,10 +30,10 @@ export default function NewPostForm({ setUpdate, user, setIsModalOpen }) {
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         try {
-            await postAPI.createPost(postData, user);
+            const postCreated = await postAPI.createPost(postData, user);
+            socket.emit('postCreated', postCreated); 
             setUpdate(true);
-            setPostData(initialState);
-            setIsModalOpen(false); // Close the modal after submitting
+            setIsModalOpen(false);
         } catch (error) {
             console.log('Error');
         }

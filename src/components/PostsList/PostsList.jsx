@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import * as postAPI from '../../utilities/posts-api';
 import EditPostForm from '../EditPostForm/EditPostForm';
+import { io } from 'socket.io-client';
+
+
+const ENDPOINT = "http://localhost:3000";
+let socket;
+
 
 export default function PostsList({ user, setUpdate, update }) {
   const [allPosts, setAllPosts] = useState([]);
@@ -8,7 +14,7 @@ export default function PostsList({ user, setUpdate, update }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editPostId, setEditPostId] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(null);
-  const [darkMode, setDarkMode] = useState(true); // State for dark mode
+  const [darkMode, setDarkMode] = useState(true); 
 
   async function getPosts() {
     try {
@@ -24,6 +30,33 @@ export default function PostsList({ user, setUpdate, update }) {
     getPosts();
     setUpdate(false);
   }, [update, updateState]);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+
+    //Listen on a socket for a new post
+    socket.on('postCreated', (postCreated) => {
+      setAllPosts((prevPosts) => [postCreated, ...prevPosts]);
+    });
+
+    // Listen on post for an update
+    socket.on('postUpdated', (updatedPost) => {
+      setAllPosts((prevPosts) => 
+        prevPosts.map(post => post._id === updatedPost._id ? updatedPost : post)
+      );
+    });
+
+    // Listen for Post Deletion
+    socket.on('postDeleted', (postId) => {
+      setAllPosts((prevPosts) =>
+        prevPosts.filter(post => post._id !== postId))
+    });
+
+    return () => {
+      socket.disconnect();
+    }
+
+  }, [])
 
   async function handleDelete(id) {
     await postAPI.deletePost(id);

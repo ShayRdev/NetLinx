@@ -30,6 +30,7 @@ async function index(req, res) {
 async function deletePost(req, res) {
     const id = req.params.id
     const deletedPost = await Post.findByIdAndDelete(id)
+    io.emit('postDeleted', req.params.id);
     res.json(deletedPost)
 }
 
@@ -40,6 +41,7 @@ async function updatePost(req, res) {
       post.subject = req.body.subject
       post.body = req.body.body
       await post.save();
+      io.emit('postUpdated', updatedPost);
       res.json(post);
     } catch (error) {
       res.status(400).json(error);

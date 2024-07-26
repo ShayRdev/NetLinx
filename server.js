@@ -25,7 +25,21 @@ app.get('/*', function(req, res) {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function() {
+const server = app.listen(port, function() {
     console.log(`Express app running on port ${port}`)
 });
 
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: "http://localhost:5173"
+    }
+});
+
+io.on('connection', (socket) => {
+    console.log('connected to socket.io');
+
+    socket.on('postCreated', (postCreated) => {
+        io.emit('postCreated', postCreated);
+    })
+});
