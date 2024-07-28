@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import ping from '../../assets/ping.wav'
 
 
-const ENDPOINT = "https://sampler.herokuapp.com/" && 'http://localhost:3000';
+const ENDPOINT = 'http://localhost:3000';
 let socket;
 
 
