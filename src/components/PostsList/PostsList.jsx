@@ -4,7 +4,7 @@ import EditPostForm from '../EditPostForm/EditPostForm';
 import { io } from 'socket.io-client';
 
 
-const ENDPOINT = "https://sampler.herokuapp.com/" && 'http://localhost:3000';
+const ENDPOINT = "https://sampler.herokuapp.com/";
 let socket;
 
 
