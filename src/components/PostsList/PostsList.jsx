@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react';
 import * as postAPI from '../../utilities/posts-api';
 import EditPostForm from '../EditPostForm/EditPostForm';
 import { io } from 'socket.io-client';
-import ping from '../../assets/ping.wav'
 
 
-const ENDPOINT = "https://sampler.herokuapp.com/" && 'http://localhost:3000';
+const ENDPOINT = "http://localhost:3000";
 let socket;
-
-
 
 
 export default function PostsList({ user, setUpdate, update }) {
@@ -29,11 +26,6 @@ export default function PostsList({ user, setUpdate, update }) {
     }
   }
 
-  function play() {
-    new Audio(ping).play()
-    audio.volume = 0.5;
-  }
-
   useEffect(() => {
     getPosts();
     setUpdate(false);
@@ -45,10 +37,6 @@ export default function PostsList({ user, setUpdate, update }) {
     //Listen on a socket for a new post
     socket.on('postCreated', (postCreated) => {
       setAllPosts((prevPosts) => [postCreated, ...prevPosts]);
-
-      if (postCreated !== user._id) {
-        play();
-      }
     });
 
     // Listen on post for an update
