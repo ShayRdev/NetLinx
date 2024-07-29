@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as postAPI from '../../utilities/posts-api';
 import EditPostForm from '../EditPostForm/EditPostForm';
 import { io } from 'socket.io-client';
+import ping from '../../../public/assets/ping.m4a'
 
 
 const ENDPOINT = "https://sampler.herokuapp.com/";
@@ -15,6 +16,7 @@ export default function PostsList({ user, setUpdate, update }) {
   const [editPostId, setEditPostId] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [darkMode, setDarkMode] = useState(true); 
+  const notification = new Audio(ping);
 
   async function getPosts() {
     try {
@@ -36,6 +38,9 @@ export default function PostsList({ user, setUpdate, update }) {
 
     //Listen on a socket for a new post
     socket.on('postCreated', (postCreated) => {
+      if (audioRef.current && postCreated.user !== user._id) {
+        notification.play();
+      }
       setAllPosts((prevPosts) => [postCreated, ...prevPosts]);
     });
 
