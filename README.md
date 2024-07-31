@@ -1,14 +1,14 @@
-# Sampler
+# NetLinx
 
 ## A MERN stack App
 
-### Sampler is a full stack forum app made with react.
+### NetLinx is a full stack forum app made with react.
 
 #### The app allows you to create a post, edit a post that you made, and Delete a post if you are signed up and logged in as a user.
 
 # Getting Started
 
-[click on this link to check out Sampler!](https://sampler.herokuapp.com/)
+[click on this link to check out NetLinx!](https://sampler.herokuapp.com/)
 
 ####  Sign Up and Login to start typing away a new post
 
