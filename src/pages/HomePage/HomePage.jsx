@@ -10,7 +10,7 @@ export default function HomePage({isModalOpen, setIsModalOpen}) {
 
   return (
     <>
-    <div className="bg-cover" style={{ backgroundImage: "url('/images/Gotham.jpeg')" }}>
+    <div className="bg-cover" style={{ backgroundColor: '#212021' }}>
       {isModalOpen && <NewPostForm user={user} setUser={setUser} setUpdate={setUpdate} setIsModalOpen={setIsModalOpen} />}
       <PostsList update={update} setUpdate={setUpdate} user={user} setUser={setUser}/>
     </div>
