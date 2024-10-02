@@ -24,4 +24,9 @@
     background-color: #2e2d2d;
     height: 100%;
   }
+
+  body {
+    margin: 0; /* Reset default body margin */
+    font-family: Arial, sans-serif; /* Change this as per your design */
+  }
   
