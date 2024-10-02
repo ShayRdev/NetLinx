@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'; // Importing chevron icons
+import { faUser, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import UserPosts from '../../components/UserPosts/UserPosts';
+import './AccountPage.css';
 
 export default function AccountPage({ user, update, setUpdate, darkMode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar open by default
