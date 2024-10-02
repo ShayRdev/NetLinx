@@ -35,7 +35,7 @@ export default function AccountPage({ user, update, setUpdate, darkMode }) {
           {/* Profile Picture Upload Section */}
           <div className="mt-6">
             <h3 className="text-xl text-white">Upload Profile Picture</h3>
-            <ProfilePictureUpload user={user} />
+            <ProfilePictureUpload currentUser={user} />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const User = require('../../models/user'); // Adjust the path according to your project structure
 
 // Set storage engine for multer
 const storage = multer.diskStorage({
@@ -14,12 +15,22 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Route to handle file upload
-router.post('/uploadProfilePicture', upload.single('profilePicture'), (req, res) => {
+router.post('/uploadProfilePicture', upload.single('profilePicture'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded.' });
   }
-  // Here you can save the file information to your database if needed
-  res.status(200).json({ message: 'File uploaded successfully!', file: req.file });
+
+  try {
+    const userId = req.body.userId; // Ensure userId is sent in the request body
+
+    // Update the user profile picture in the database
+    await User.findByIdAndUpdate(userId, { profilePicture: req.file.path }, { new: true });
+
+    res.status(200).json({ message: 'File uploaded successfully!', file: req.file });
+  } catch (error) {
+    console.error('Error saving profile picture:', error);
+    res.status(500).json({ message: 'Error saving profile picture', error });
+  }
 });
 
 module.exports = router;

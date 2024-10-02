@@ -20,7 +20,7 @@ export default function SideBar({ isSidebarOpen, toggleSidebar, user }) {
         {isSidebarOpen && (
           <img
             className="h-20 w-20 rounded-full cursor-pointer"
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+            src={user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
             alt="User Profile"
           />
         )}

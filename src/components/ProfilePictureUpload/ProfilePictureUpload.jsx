@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import sendRequest from "../../utilities/send-request"; // Correct path
+import sendRequest from "../../utilities/send-request"; // Ensure the correct path to the utility for API requests
 
-const ProfilePictureUpload = () => {
+const ProfilePictureUpload = ({ currentUser }) => { // Accept currentUser as a prop
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
 
@@ -14,9 +14,10 @@ const ProfilePictureUpload = () => {
   const handleFileUpload = async (file) => {
     const formData = new FormData();
     formData.append('profilePicture', file);
-    
+    formData.append('userId', currentUser._id); // Ensure you have the current user's ID
+
     try {
-      const response = await fetch('/api/uploads/uploadProfilePicture', { // Updated endpoint
+      const response = await fetch('/api/uploads/uploadProfilePicture', {
         method: 'POST',
         body: formData,
       });
@@ -27,13 +28,12 @@ const ProfilePictureUpload = () => {
 
       const data = await response.json();
       console.log('Upload successful:', data);
-      setUploadStatus('File uploaded successfully!'); // Update upload status
+      setUploadStatus('File uploaded successfully!'); // Update status on success
     } catch (error) {
       console.error('Error uploading file:', error);
-      setUploadStatus('Error uploading file'); // Update upload status on error
+      setUploadStatus('Error uploading file. Please try again.'); // Update status on error
     }
   };
-  
 
   // Function triggered on form submit
   const handleSubmit = (event) => {
@@ -52,7 +52,7 @@ const ProfilePictureUpload = () => {
         <input type="file" onChange={handleFileChange} />
         <button type="submit">Upload</button>
       </form>
-      {uploadStatus && <p>{uploadStatus}</p>}
+      {uploadStatus && <p>{uploadStatus}</p>} {/* Display upload status */}
     </div>
   );
 };
