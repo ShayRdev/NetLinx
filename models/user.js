@@ -4,7 +4,10 @@ const SALT_ROUNDS = 6;
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
-    name: {type: String, required: true},
+    name: {
+        type: String, 
+        required: true
+    },
     email: {
         type: String,
         unique: true,
@@ -17,7 +20,11 @@ const userSchema = new Schema({
         trim: true,
         minLength: 3,
         required: true
-    }, 
+    },
+    profilePicture: { // New field for the profile picture
+        type: String, // This can be the filename or URL
+        default: null, // Set default as null
+      },
     
 }, {
     timestamps: true,

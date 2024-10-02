@@ -1,9 +1,9 @@
-// SideBar.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import './SideBar.css'; // Import the updated CSS file for styling
 
-const SideBar = ({ isSidebarOpen, toggleSidebar, user }) => {
+export default function SideBar({ isSidebarOpen, toggleSidebar, user }) {
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -11,13 +11,9 @@ const SideBar = ({ isSidebarOpen, toggleSidebar, user }) => {
 
   return (
     <div
-      className={`transition-all duration-300 ${
-        isSidebarOpen ? 'md:w-1/4 w-56' : 'md:w-20 w-16'
-      } bg-white shadow-lg p-4 flex flex-col justify-between`}
-      style={{
-        backgroundColor: '#2e2d2d',
-        height: '100%',
-      }}
+      className={`sidebar-container transition-all duration-300 ${
+        isSidebarOpen ? 'w-56 md:w-1/4' : 'w-16 md:w-20'
+      }`}
     >
       {/* User Profile Section */}
       <div className="flex items-center mb-4">
@@ -37,17 +33,14 @@ const SideBar = ({ isSidebarOpen, toggleSidebar, user }) => {
         </div>
       </div>
 
-      {/* Icon for toggling sidebar */}
-      <div className="flex justify-center mb-4">
+      <div className="sidebar-icons">
         <FontAwesomeIcon
           icon={isSidebarOpen ? faChevronLeft : faUser}
-          className="text-white h-10 w-10 cursor-pointer"
+          className="text-white h-8 w-8 cursor-pointer"  // Changed from h-10 w-10 to h-8 w-8
           onClick={toggleSidebar}
           title={isSidebarOpen ? 'Collapse Sidebar' : 'Expand Sidebar'}
         />
       </div>
     </div>
   );
-};
-
-export default SideBar;
+}

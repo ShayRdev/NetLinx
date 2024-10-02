@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SideBar from './SideBar/SideBar'; // Import the SideBar component
 import UserPosts from '../../components/UserPosts/UserPosts';
+import ProfilePictureUpload from '../../components/ProfilePictureUpload/ProfilePictureUpload'; // Import the upload component
 import './AccountPage.css';
 
 export default function AccountPage({ user, update, setUpdate, darkMode }) {
@@ -30,6 +31,12 @@ export default function AccountPage({ user, update, setUpdate, darkMode }) {
         <div className="p-6 pt-20">
           <h2 className="p-2 text-3xl font-bold mb-2 text-center text-white">Posts</h2>
           <UserPosts user={user} setUpdate={setUpdate} update={update} darkMode={darkMode} />
+
+          {/* Profile Picture Upload Section */}
+          <div className="mt-6">
+            <h3 className="text-xl text-white">Upload Profile Picture</h3>
+            <ProfilePictureUpload user={user} />
+          </div>
         </div>
       </div>
     </div>
