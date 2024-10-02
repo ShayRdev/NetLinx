@@ -1,0 +1,27 @@
+/* AccountPage.css */
+.flex {
+    display: flex;
+  }
+  
+  .h-screen {
+    height: 100vh;
+  }
+  
+  .pt-20 {
+    padding-top: 5rem; /* Adjust as necessary */
+  }
+  
+  .ml-64 {
+    margin-left: 16rem; /* Adjust for open sidebar */
+  }
+  
+  .ml-16 {
+    margin-left: 4rem; /* Adjust for closed sidebar */
+  }
+  
+  /* Additional styles for the sidebar */
+  .sidebar {
+    background-color: #2e2d2d;
+    height: 100%;
+  }
+  

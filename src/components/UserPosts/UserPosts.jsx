@@ -45,7 +45,13 @@ export default function UserPosts({ user, setUpdate, update, darkMode }) {
   return (
     <div className={`max-w-md mx-auto rounded-xl overflow-hidden md:max-w-2xl ${darkMode ? 'text-white' : 'text-gray-800'}`}>
       {userPosts.map((post) => (
-        <div key={post._id} className={` rounded-lg shadow-md my-4 p-4 pb-10 ${darkMode ? 'bg-gray-800' : 'bg-white text-gray-800'}`}>
+        <div 
+          key={post._id} 
+          className={`rounded-lg shadow-md my-4 p-4 pb-10 ${!darkMode ? 'bg-white' : ''}`} 
+          style={darkMode ? { backgroundColor: '#2e2d2d' } : {}}
+          
+        >
+          
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <img
