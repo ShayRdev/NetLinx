@@ -6,7 +6,7 @@ const multerS3 = require('multer-s3');
 const { S3Client } = require('@aws-sdk/client-s3');
 const cors = require('cors'); // Import cors
 const checkToken = require('./config/checkToken'); // Import your token middleware
-const User = require('./models/User'); // Ensure you import your User model
+const User = require('./models/user'); // Ensure you import your User model
 
 require('dotenv').config();
 require('./config/database');
