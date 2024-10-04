@@ -132,7 +132,7 @@ export default function PostsList({ user, setUpdate, update }) {
             )}
           </div>
 
-          <div className="mt-3">
+          <div className="mt-3 p-0.5">
             <h3 className={`text-xl mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{post.subject}</h3>
             <p className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-700'}`}>{post.body}</p>
           </div>
