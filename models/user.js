@@ -23,23 +23,25 @@ const userSchema = new Schema({
     },
     profilePicture: { // New field for the profile picture
         type: String, // This can be the filename or URL
-        default: null, // Set default as null
-      },
-    
+    },
 }, {
     timestamps: true,
     toJSON: {
         transform: function(doc, ret) {
-          delete ret.password;
-          return ret;
+            delete ret.password; // Remove password from the returned JSON
+            return ret;
         }
     }
 });
 
+// Hash the password before saving
 userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
     return next();
-  });
+});
 
-module.exports = mongoose.model('User', userSchema);
+// Check if the model already exists to avoid overwrite error
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+module.exports = User;

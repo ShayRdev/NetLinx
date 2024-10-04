@@ -56,7 +56,7 @@ export default function UserPosts({ user, setUpdate, update, darkMode }) {
             <div className="flex-shrink-0">
               <img
                 className="h-10 w-10 rounded-full"
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                src={user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
                 alt=""
               />
             </div>
@@ -65,7 +65,7 @@ export default function UserPosts({ user, setUpdate, update, darkMode }) {
               <p className="text-sm font-medium text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</p>
               <div className='border-solid w-full'></div>
             </div>
-            {user._id === post.user && (
+            {user._id === post.user._id && (
               <div className="ml-auto relative">
                 <button
                   className={`inline-flex items-center justify-center p-2 border border-transparent rounded-md shadow-sm text-sm font-medium ${darkMode ? 'text-white bg-gray-600 hover:bg-gray-700' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} focus:outline-none`}

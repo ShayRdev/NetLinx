@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import * as postAPI from '../../utilities/posts-api';
 import EditPostForm from '../EditPostForm/EditPostForm';
+import Comments from '../Comments/Comments';
 import { io } from 'socket.io-client';
-// import ping from '../../../public/assets/ping.m4a'
-
 
 const ENDPOINT = "https://sampler.herokuapp.com/";
 let socket;
-
 
 export default function PostsList({ user, setUpdate, update }) {
   const [allPosts, setAllPosts] = useState([]);
@@ -15,8 +13,7 @@ export default function PostsList({ user, setUpdate, update }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editPostId, setEditPostId] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(null);
-  const [darkMode, setDarkMode] = useState(true); 
-  // const notification = new Audio(ping);
+  const [darkMode, setDarkMode] = useState(true);
 
   async function getPosts() {
     try {
@@ -36,22 +33,16 @@ export default function PostsList({ user, setUpdate, update }) {
   useEffect(() => {
     socket = io(ENDPOINT);
 
-    //Listen on a socket for a new post
     socket.on('postCreated', (postCreated) => {
-      if (audioRef.current && postCreated.user !== user._id) {
-        notification.play();
-      }
       setAllPosts((prevPosts) => [postCreated, ...prevPosts]);
     });
 
-    // Listen on post for an update
     socket.on('postUpdated', (updatedPost) => {
       setAllPosts((prevPosts) => 
         prevPosts.map(post => post._id === updatedPost._id ? updatedPost : post)
       );
     });
 
-    // Listen for Post Deletion
     socket.on('postDeleted', (postId) => {
       setAllPosts((prevPosts) =>
         prevPosts.filter(post => post._id !== postId))
@@ -60,8 +51,7 @@ export default function PostsList({ user, setUpdate, update }) {
     return () => {
       socket.disconnect();
     }
-
-  }, [])
+  }, []);
 
   async function handleDelete(id) {
     await postAPI.deletePost(id);
@@ -74,6 +64,7 @@ export default function PostsList({ user, setUpdate, update }) {
   }
 
   function toggleDropdown(id) {
+    console.log('Toggling dropdown for post ID:', id);
     setDropdownOpen(dropdownOpen === id ? null : id);
   }
 
@@ -83,7 +74,6 @@ export default function PostsList({ user, setUpdate, update }) {
 
   return (
     <div className={`pt-24 max-w-md mx-auto ${darkMode ? ' text-white' : 'text-gray-900'} rounded-xl overflow-hidden md:max-w-2xl`}>
-      {/* Toggle dark mode button */}
       <div className="absolute pt-24 top-0 right-0 m-4">
         <button
           className={`px-3 py-1 rounded-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} border border-gray-200 focus:outline-none`}
@@ -93,21 +83,18 @@ export default function PostsList({ user, setUpdate, update }) {
           {darkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
       </div>
-
       {allPosts.map((post) => (
         <div 
           key={post._id} 
           className={`rounded-lg shadow-md my-4 p-4 pb-10 ${!darkMode ? 'bg-white' : ''}`} 
           style={darkMode ? { backgroundColor: '#2e2d2d' } : {}}
         >
-          
-
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <img
                 className="h-10 w-10 rounded-full"
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                alt=""
+                src={post.user.profilePicture || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
+                alt={post.user.username}
               />
             </div>
             <div className="ml-3">
@@ -115,7 +102,7 @@ export default function PostsList({ user, setUpdate, update }) {
               <p className={`text-sm font-medium ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{new Date(post.createdAt).toLocaleDateString()}</p>
               <div className={`${darkMode ? 'border-gray-600' : 'border-gray-300'} border-solid w-full mt-1`}></div>
             </div>
-            {user._id === post.user && (
+            {user._id === post.user._id && (
               <div className="ml-auto relative">
                 <button
                   className={`inline-flex items-center justify-center p-2 rounded-md text-sm font-medium ${darkMode ? 'text-gray-400 bg-gray-700 hover:bg-gray-600' : 'text-gray-600 bg-gray-100 hover:bg-gray-200'} shadow-sm border border-transparent focus:outline-none`}
@@ -148,6 +135,16 @@ export default function PostsList({ user, setUpdate, update }) {
           <div className="mt-3">
             <h3 className={`text-xl mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{post.subject}</h3>
             <p className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-700'}`}>{post.body}</p>
+          </div>
+
+          {/* Comments Section */}
+          <div className="mt-4">
+            <Comments 
+              postId={post._id} 
+              darkMode={darkMode} 
+              setUpdate={setUpdate}
+              user={user}
+            />
           </div>
         </div>
       ))}

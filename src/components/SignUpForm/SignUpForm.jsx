@@ -9,15 +9,22 @@ export default function SignUpForm({ setUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [file, setFile] = useState(null);
   const [error, setError] = useState('');
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      const formData = { name, email, password };
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('file', file); // Append the file to the form data
+
       const user = await signUp(formData);
       setUser(user);
-    } catch {
+    } catch (err) {
+      console.error('Sign up error:', err);
       setError('Sign Up Failed - Try Again');
     }
   };
@@ -40,6 +47,10 @@ export default function SignUpForm({ setUser }) {
         break;
     }
     setError('');
+  };
+
+  const handleFileChange = (evt) => {
+    setFile(evt.target.files[0]);
   };
 
   const disable = password !== confirm;
@@ -103,6 +114,16 @@ export default function SignUpForm({ setUser }) {
                 value={confirm} 
                 onChange={handleChange}
                 required
+              />
+            </div>
+            <div>
+              <div className='mb-2'>
+                <Label value="Profile Picture" />
+              </div>
+              <input 
+                type="file" 
+                onChange={handleFileChange} 
+                required 
               />
             </div>
             <button 
