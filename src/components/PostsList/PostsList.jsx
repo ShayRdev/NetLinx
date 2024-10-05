@@ -135,6 +135,7 @@ export default function PostsList({ user, setUpdate, update }) {
           <div className="mt-3 p-0.5">
             <h3 className={`text-xl mb-2 ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>{post.subject}</h3>
             <p className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-700'}`}>{post.body}</p>
+            {/* <img src="https://live.staticflickr.com/2474/3861091786_7775e8579a_c.jpg" alt="" /> */}
           </div>
 
           {/* Comments Section */}

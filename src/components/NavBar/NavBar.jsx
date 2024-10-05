@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-export default function NavBar({ user, setUser, setIsModalOpen }) {
+export default function NavBar({ user, setUser, setIsModalOpen, darkMode }) {
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {

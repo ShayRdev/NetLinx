@@ -25,6 +25,7 @@ export default function App() {
           <NavBar setUser={setUser} user={user} setIsModalOpen={setIsModalOpen} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           {isModalOpen && (
             <NewPostForm
+              darkMode={darkMode}
               user={user}
               setUser={setUser}
               setUpdate={setUpdate}
